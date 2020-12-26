@@ -22,5 +22,5 @@ deno run https://deno.land/std/examples/welcome.ts
 ## ...or Start Web Server with Deno🦕
 
 ```
-cd app && deno run --allow-net helloDeno.ts
+cd app && deno run --allow-net hello_http.ts
 ```
