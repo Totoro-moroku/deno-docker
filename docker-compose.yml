@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  deno:
+    build: .
+    command: bash -c "source ~/.bash_profile && deno run --allow-net app/index.ts"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/var/www/html/app
+
+  mongo_do:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - "1000:1000"
+    volumes:
+      - ./db:/data/db
+      - ./configdb:/data/configdb

@@ -1,3 +1,4 @@
 app/cert.pem
 app/private.pem
 .vscode/
+db/
