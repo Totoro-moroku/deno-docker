@@ -5,15 +5,13 @@ import {
   Status,
 } from "https://deno.land/x/oak/mod.ts";
 
+import { Item } from "./seeds.ts";
+
+import { findItems } from "./controller/item.ts";
+
 const port: number = 8080;
 
 const router = new Router();
-
-interface Item {
-  id: string;
-  name: string;
-  rate: number;
-}
 
 const items = new Map<string, Item[]>();
 
@@ -71,7 +69,8 @@ router
       console.log(items);
       return;
     }
-  });
+  })
+  .post("/get", findItems);
 
 const app = new Application();
 
