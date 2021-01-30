@@ -3,24 +3,22 @@
 ## Build Image
 
 ```
-docker build ./ -t deno-docker
+docker-compose build
 ```
 
 ## Run the Container
 
 ```
-docker container run -it --rm -p 8080:8080 --mount src=`pwd`,target=/var/www/html,type=bind --disable-content-trust deno-docker
+docker-compose up -d
 ```
 
-## Check If It's Installed Correctly
+## Enter the Container
 
 ```
-deno run https://deno.land/std/examples/welcome.ts
-# Welcome to Deno 🦕
+docker-compose exec deno bash
 ```
 
-## ...or Start Web Server with Deno🦕
-
+## Get out the Container
 ```
-cd app && deno run --allow-net hello_http.ts
+exit
 ```
