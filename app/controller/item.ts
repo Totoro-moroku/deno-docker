@@ -25,7 +25,10 @@ interface Get {
   id: string;
 }
 
-export const findItems = async (context: RouterContext) => {
+export const findItem = async (context: RouterContext) => {
+  /**
+   * @todo　この間の処理は関数に抜き出せそう
+   */
   const request = context.request;
 
   if (!request.hasBody) {
@@ -42,6 +45,10 @@ export const findItems = async (context: RouterContext) => {
     context.throw(Status.BadRequest, "request of type is not json.");
   }
 
+  /**
+   * @todo{end}
+   */
+
   if (item) {
     context.assert(item.id && typeof item.id === "string", Status.BadRequest);
 
@@ -49,6 +56,46 @@ export const findItems = async (context: RouterContext) => {
 
     context.response.status = Status.OK;
     context.response.body = value;
+    context.response.type = "json";
+
+    return;
+  }
+};
+
+export const updateItem = async (context: RouterContext) => {
+  /**
+   * @todo　この間の処理は関数に抜き出せそう
+   */
+  const request = context.request;
+
+  if (!request.hasBody) {
+    context.throw(Status.BadRequest, "request of the body is null.");
+  }
+
+  const body = await request.body();
+
+  let item: Partial<Item> | undefined;
+
+  if (body.type === "json") {
+    item = await body.value;
+    console.log(item);
+  } else {
+    context.throw(Status.BadRequest, "request of type is not json.");
+  }
+
+  /**
+   * @todo{end}
+   */
+
+  if (item) {
+    console.log("post item");
+
+    context.assert(item.id && typeof item.id === "string", Status.BadRequest);
+
+    ItemsDB.set(item.id, item as Item);
+
+    context.response.status = Status.OK;
+    context.response.body = item;
     context.response.type = "json";
 
     return;
